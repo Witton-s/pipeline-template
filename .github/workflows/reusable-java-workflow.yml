@@ -47,3 +47,12 @@ jobs:
           name: build-files
       - run: ls -R
       - run: echo "Push Modules Done!"
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env: [staging, production]
+    environment: ${{ matrix.env }}
+    needs: push
+    steps:
+       - run: echo "Deploying to ${{ matrix.env }}"
